@@ -53,12 +53,12 @@ string customer::getLastName(){
 // --------------------------------------------------------------------------------------------------------------------
 void customer::customerHistory(){
     int i = 0;
-    while (i < history.size()){
-        cout << history[i] << endl;
-        i++;
+    while (i < cusHis.size()) {
+      cout << cusHis[i] << endl;
+      i++;
     }
-    if (history.size() == 0){
-        cout << "Error: No available history." << endl;
+    if (cusHis.size() == 0) {
+      cout << "Error: No available history." << endl;
     }
 }
 
@@ -66,7 +66,7 @@ void customer::customerHistory(){
 // Utilizing vector, add movie by title to a customers history. 
 // --------------------------------------------------------------------------------------------------------------------
 void customer::addMovie(string newMovie) {
-    history.emplace_back(newMovie);
+  cusHis.emplace_back(newMovie);
 }
 
 // ------------------------------------------------- add movie -------------------------------------------------------

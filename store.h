@@ -7,20 +7,35 @@
 // Implementation file for storing.
 // --------------------------------------------------------------------------------------------------------------------
 
-#ifndef STORE_H_
-#define STORE_H_
+#ifndef STORE_H
+#define STORE_H
 
+#include "customer.h"
 #include "inventory.h"
+#include "movie.h"
+#include "string"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
-class store {
-private:
-
-Inventory inv;
-
+class Store {
 public:
-  store();
-  ~store();
+  Store();
+  ~Store();
+  void loadMovies();
+  void loadCustomers();
+  void readCommandFile(string fileName);
+  void readCustomersFile(string fileName);
+  void readMovieFile(string fileName);
+  bool addCustomer(int hashkey, customer customer);
+  bool findCustomer(int ID);
+
+private:
+  Inventory inventory;
+  //HashTable<int, Customer> customersList;
 };
 #endif

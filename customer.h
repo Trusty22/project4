@@ -30,12 +30,14 @@ public:
     string getFirstName();
     string getLastName();
     int getID();
+    vector<string> cusHis;
+
     friend std::ostream& operator<<(std::ostream &output, const customer &customer); //ostream
 private:
     int id;
     string firstName;
     string lastName;
-    vector<string> history;
 
+    
 };
 #endif
