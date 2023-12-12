@@ -10,10 +10,14 @@
 #ifndef STORE_H_
 #define STORE_H_
 
+#include "inventory.h"
+
 using namespace std;
 
 class store {
 private:
+
+Inventory inv;
 
 public:
   store();
