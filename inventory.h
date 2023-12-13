@@ -17,6 +17,7 @@ using namespace std;
 #include "movie.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class inventory{
 public:
@@ -32,10 +33,10 @@ public:
     void printCustomerHistory(int id);
 
 private:
-    vector<pair<int, vector<string>>> customerHistory;
-    vector<movie> comedy;
-    vector<movie> drama; 
-    vector<movie> classics; 
+  map<int, vector<string>> customerHistory;
+  vector<movie> comedy;
+  vector<movie> drama;
+  vector<movie> classics; 
 
 };
 #endif

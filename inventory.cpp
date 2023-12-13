@@ -30,23 +30,17 @@ inventory::~inventory() {
 // Store customer history. Using vector pair, taking in 4 digit id number.
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::addCustomerHistory(int id, string history) {
-  customerHistory[id].second.push_back(history); // using vector pair to store
+  customerHistory[id].push_back(history);
 }
 
 // ---------------------------------------------- print customer history ----------------------------------------------
 // Print cust history. Stored in vector pair.
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::printCustomerHistory(int id) {
-  cout << "Customer || " << id << " History " << endl; // REMOVED ----------
+  cout << "Customer " << id << " History " << endl; // REMOVED ----------
 
-  int i = 0;
-
-  cout << customerHistory[id].second[i] << endl;
-  cout << customerHistory[id].second.size() << endl;
-  
-  while (i < customerHistory[id].second.size()) {
-    cout << customerHistory[id].second[i] << endl; // happens here when
-    i++;
+  for (int i = 0; i < customerHistory[id].size(); i++) {
+    cout << customerHistory[id][i] << endl;
   }
 }
 
