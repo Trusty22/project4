@@ -24,6 +24,9 @@ store::store() {
 // --------------------------------------------------------------------------------------------------------------------
 store::~store() {
 }
+void notFound() {
+  cout << "Invalid: Customer ID not found." << endl;
+}
 
 // -------------------------------------------- in data4commands ------------------------------------------------------
 // Reads data4commands. From text file. Assumptions hold.
@@ -31,118 +34,118 @@ store::~store() {
 void store::inData4Commands(string in) {
   ifstream myFile(in);
   if (!myFile.is_open()) {
-    cerr << "Error opening file: " << in << endl;
+    cerr << "File Not Found: " << in << endl;
     return;
   }
 
-  string line;
-  while (getline(myFile, line)) {
-    stringstream ss(line);
-    string temp;
-    string commandType, mediaType, movieType, movieTitle, directorName, majorActor;
-    int customerID, releaseYear, releaseMonth;
+  string word;
+  while (getline(myFile, word)) {
+    stringstream ss(word);
+    string temp, transaction, type, movieGenre, mName, director, actor;
+    int ID, yearR, monthR;
 
-    ss >> commandType;
+    ss >> transaction;
 
-    if (commandType == "I") {
+    if (transaction == "I") {
       inv.printEntireInventory();
-    } else if (commandType == "H") {
+    } else if (transaction == "H") {
       ss >> temp;
-      istringstream(temp) >> customerID;
+      istringstream(temp) >> ID;
 
-      while (!customersIn.findItem(customerID)) {
-        cout << "ERROR: No customer with this ID found." << endl;
-        if (!getline(myFile, line)) {
+      while (!customersIn.findItem(ID)) {
+        notFound();
+        if (!getline(myFile, word)) {
           myFile.close();
           return;
         }
-        stringstream ss(line);
-        ss >> commandType;
-        if (commandType == "H") {
+        stringstream ss(word);
+        ss >> transaction;
+        if (transaction == "H") {
           ss >> temp;
-          istringstream(temp) >> customerID;
+          istringstream(temp) >> ID;
         } else {
           break;
         }
       }
 
-      inv.printCustomerHistory(customerID);
-    } else if (commandType == "B" || commandType == "R") {
+      inv.printCustomerHistory(ID);
+    } else if (transaction == "B" || transaction == "R") {
       ss >> temp;
-      istringstream(temp) >> customerID;
+      istringstream(temp) >> ID;
 
-      while (!customersIn.findItem(customerID)) {
-        cout << "ERROR: No customer with this ID found." << endl;
-        if (!getline(myFile, line)) {
+      while (!customersIn.findItem(ID)) {
+        notFound();
+        if (!getline(myFile, word)) {
           myFile.close();
           return;
         }
-        stringstream ss(line);
-        ss >> commandType;
-        if (commandType == "B" || commandType == "R") {
+        stringstream ss(word);
+        ss >> transaction;
+        if (transaction == "B" || transaction == "R") {
           ss >> temp;
-          istringstream(temp) >> customerID;
+          istringstream(temp) >> ID;
         } else {
           break;
         }
       }
 
-      ss >> mediaType;
-      if (mediaType != "D") {
-        cout << "ERROR: Invalid Media Type." << endl;
+      ss >> type;
+      if (type != "D") {
+        cout << "Invalid: not existing type of media." << endl;
         continue;
       }
 
-      ss >> movieType;
+      ss >> movieGenre;
 
-      if (movieType == "F") {
-        ss.ignore(); // Ignore the space after movieType
-        getline(ss, movieTitle, ',');
-        ss >> releaseYear;
+      if (movieGenre == "F") {
+        ss.ignore(); // Ignore the space after movieGenre
+        getline(ss, mName, ',');
+        ss >> yearR;
 
-        if (inv.actionComedy("F", " " + movieTitle, releaseYear)) {
-          string history = commandType + " " + movieType + " " + movieTitle + " " + to_string(releaseYear);
-          inv.storeCustomerHistory(customerID, history);
+        if (inv.actionComedy("F", " " + mName, yearR)) {
+          string his = transaction + " " + movieGenre + " " + mName + " " + to_string(yearR);
+          inv.storeCustomerHistory(ID, his);
 
-          if (commandType == "B") {
-            inv.actionComedy("B", " " + movieTitle, releaseYear);
+          if (transaction == "B") {
+            inv.actionComedy("B", " " + mName, yearR);
           } else {
-            inv.actionComedy("R", " " + movieTitle, releaseYear);
+            inv.actionComedy("R", " " + mName, yearR);
           }
         }
-      } else if (movieType == "D") {
-        getline(ss, directorName, ',');
-        getline(ss, movieTitle, ',');
+      } else if (movieGenre == "D") {
 
-        if (inv.actionDrama("F", " " + directorName, movieTitle)) {
-          string history = commandType + " " + movieType + " " + movieTitle + " " + directorName;
-          inv.storeCustomerHistory(customerID, history);
+        getline(ss, director, ',');
+        getline(ss, mName, ',');
 
-          if (commandType == "B") {
-            inv.actionDrama("B", " " + directorName, movieTitle);
+        if (inv.actionDrama("F", " " + director, mName)) {
+          string his = transaction + " " + movieGenre + " " + mName + " " + director;
+          inv.storeCustomerHistory(ID, his);
+
+          if (transaction == "B") {
+            inv.actionDrama("B", " " + director, mName);
           } else {
-            inv.actionDrama("R", " " + directorName, movieTitle);
+            inv.actionDrama("R", " " + director, mName);
           }
         }
-      } else if (movieType == "C") {
-        ss >> releaseMonth >> releaseYear >> majorActor;
+      } else if (movieGenre == "C") {
+        ss >> monthR >> yearR >> actor;
 
-        if (inv.actionClassic("F", releaseMonth, releaseYear, majorActor)) {
-          string history = commandType + " " + movieType + " " + to_string(releaseMonth) + " " +
-                           to_string(releaseYear) + " " + majorActor;
-          inv.storeCustomerHistory(customerID, history);
+        if (inv.actionClassic("F", monthR, yearR, actor)) {
+          string his = transaction + " " + movieGenre + " " + to_string(monthR) + " " +
+                       to_string(yearR) + " " + actor;
+          inv.storeCustomerHistory(ID, his);
 
-          if (commandType == "B") {
-            inv.actionClassic("B", releaseMonth, releaseYear, majorActor);
+          if (transaction == "B") {
+            inv.actionClassic("B", monthR, yearR, actor);
           } else {
-            inv.actionClassic("R", releaseMonth, releaseYear, majorActor);
+            inv.actionClassic("R", monthR, yearR, actor);
           }
         }
       } else {
-        cout << "ERROR: Invalid movie type." << endl;
+        cout << "Invalid: Movie Genre not found." << endl;
       }
     } else {
-      cout << "ERROR: Invalid command type." << endl;
+      cout << "Invalid Command." << endl;
     }
   }
 
@@ -155,18 +158,18 @@ void store::inData4Commands(string in) {
 void store::inData4Customers(string in) {
   ifstream myFile(in);
   if (!myFile.is_open()) {
-    cerr << "Error opening file: " << in << endl;
+    cerr << "File Not Opened!  " << in << endl;
     return;
   }
 
   while (!myFile.eof()) {
-    string line;
-    getline(myFile, line);
-    if (line.empty()) {
+    string word;
+    getline(myFile, word);
+    if (word.empty()) {
       break;
     }
 
-    stringstream parseLine(line);
+    stringstream parseLine(word);
     int ID;
     string firstName, lastName;
 
@@ -187,62 +190,64 @@ void store::inData4Customers(string in) {
 void store::inData4Movies(string in) {
   ifstream myFile(in);
   if (!myFile.is_open()) {
-    cerr << "Error opening file: " << in << endl;
+    cerr << "File Not Opened!  " << in << endl;
     return;
   }
 
   while (!myFile.eof()) {
-    string line;
-    getline(myFile, line);
-    if (line.empty()) {
+    string word;
+    getline(myFile, word);
+    if (word.empty()) {
       break;
     }
 
-    stringstream ss(line);
-    string movieType, director, title, majorActor, majorActorFirstName, majorActorLastName, temp;
-    int stock, releaseYear, releaseMonth;
+    stringstream ss(word);
+    int amount, yearR, monthR;
+    string movieGenre, director, title, actor, FirstN, lastN, temp;
+    
 
     // Read movie type
-    getline(ss, movieType, ',');
+    getline(ss, movieGenre, ',');
 
-    // Read stock
+    // Read amount
     getline(ss, temp, ',');
-    istringstream(temp) >> stock;
+    istringstream(temp) >> amount;
 
     // Read director and title
     getline(ss, director, ',');
     getline(ss, title, ',');
 
-    if (movieType == "C" || movieType == "c") {
+    if (movieGenre == "C" || movieGenre == "c") {
       // Read major actor's first and last names
-      getline(ss, majorActorFirstName, ' ');
-      getline(ss, majorActorLastName, ' ');
-      majorActor = majorActorFirstName + majorActorLastName;
+      getline(ss, FirstN, ' ');
+      getline(ss, lastN, ' ');
+      actor = FirstN + lastN;
 
       // Read release month and year
       getline(ss, temp, ' ');
       getline(ss, temp, ' ');
-      istringstream(temp) >> releaseMonth;
+      istringstream(temp) >> monthR;
 
       getline(ss, temp, ' ');
-      istringstream(temp) >> releaseYear;
+      istringstream(temp) >> yearR;
 
-      movie newMovie = movie("C", stock, director, title, majorActor, releaseYear, releaseMonth);
+      movie newMovie = movie("C", amount, director, title, actor, yearR, monthR);
       inv.addMovie(newMovie);
-    } else if (movieType == "F" || movieType == "f" || movieType == "D" || movieType == "d") {
+
+    } else if (movieGenre == "F" || movieGenre == "f" || movieGenre == "D" || movieGenre == "d") {
       // Read release year
       getline(ss, temp);
-      istringstream(temp) >> releaseYear;
+      istringstream(temp) >> yearR;
 
-      if (movieType == "F" || movieType == "f") {
-        movie newMovie = movie("F", stock, director, title, releaseYear);
+      if (movieGenre == "F" || movieGenre == "f") {
+        movie newMovie = movie("F", amount, director, title, yearR);
         inv.addMovie(newMovie);
-      } else if (movieType == "D" || movieType == "d") {
-        movie newMovie = movie("D", stock, director, title, releaseYear);
+      } else if (movieGenre == "D" || movieGenre == "d") {
+        movie newMovie = movie("D", amount, director, title, yearR);
         inv.addMovie(newMovie);
       }
     } else {
-      cout << "Error: Invalid Movie Type." << endl;
+      cout << "Invalid Movie Genre." << endl;
     }
   }
 
