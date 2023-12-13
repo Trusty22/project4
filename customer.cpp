@@ -68,6 +68,9 @@ void customer::customerHistory(){
 void customer::addMovie(string newMovie) {
   cusHis.emplace_back(newMovie);
 }
+int customer::getID() {
+  return this->id;
+}
 
 // ------------------------------------------------- add movie -------------------------------------------------------
 // printing to the format per the instructions. id number (4 digit), last name, first name. 
