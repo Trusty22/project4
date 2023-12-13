@@ -18,30 +18,30 @@ using namespace std;
 // ------------------------------------------------- constructor ------------------------------------------------------
 // Prescribed movie constructor. Includes variations for movie type. 
 // --------------------------------------------------------------------------------------------------------------------
-movie::movie(string movie_type){
-        while (!(movie_type == "D" || movie_type == "F" || movie_type == "C")) {
+movie::movie(string movie_Genre){
+        while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")) {
             std::cout << "Type does not exist. Enter 'D', 'F', or 'C': ";
-            std::cin >> movie_type;
+            std::cin >> movie_Genre;
         }
-        if ((movie_type == "D") || (movie_type == "F") || (movie_type == "C")){
-        this->movie_type = movie_type;
+        if ((movie_Genre == "D") || (movie_Genre == "F") || (movie_Genre == "C")){
+        this->movie_Genre = movie_Genre;
     }
 }
 
 // ------------------------------ drama and comedy specific type constructor ------------------------------------------
 // Prescribed movie constructor for drama and comedy types. Includes variations for movie type. 
 // --------------------------------------------------------------------------------------------------------------------
-movie::movie(string movie_type, int stock, string director, string title, int release_year){
-    while (!(movie_type == "D" || movie_type == "F" || movie_type == "C")){
+movie::movie(string movie_Genre, int stock, string director, string title, int release_year){
+    while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")){
         std::cout << "Type does not exist. Enter 'D', 'F', or 'C': ";
-        std::cin >> movie_type;
+        std::cin >> movie_Genre;
     }
-    if ((movie_type == "D") || (movie_type == "F")){
-    this->movie_type = movie_type;
+    if ((movie_Genre == "D") || (movie_Genre == "F")){
+    this->movie_Genre = movie_Genre;
     this->stock = stock;
     this->director = director;
     this->title = title;
-    this->major_actor = major_actor;
+    this->actor = actor;
     this->release_year = release_year;
     this->release_month = release_month;
   }
@@ -50,18 +50,18 @@ movie::movie(string movie_type, int stock, string director, string title, int re
 // ------------------------------------ classics specific type constructor --------------------------------------------
 // Prescribed movie constructor for drama and comedy types. Includes variations for movie type. 
 // --------------------------------------------------------------------------------------------------------------------
-movie::movie(string movie_type, int stock, string director, string title, string major_actor, int release_month, 
+movie::movie(string movie_Genre, int stock, string director, string title, string major_actor, int release_month, 
 int release_year){
-    while (!(movie_type == "D" || movie_type == "F" || movie_type == "C")){
+    while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")){
     std::cout << "Type does not exist. Enter 'D', 'F', or 'C': ";
-    std::cin >> movie_type;
+    std::cin >> movie_Genre;
     }
-    if ((movie_type == "C")){
-    this->movie_type = movie_type;
+    if ((movie_Genre == "C")){
+    this->movie_Genre = movie_Genre;
     this->stock = stock;
     this->director = director;
     this->title = title;
-    this->major_actor = major_actor;
+    this->actor = actor;
     this->release_year = release_year;
     this->release_month = release_month;
   }
@@ -78,13 +78,13 @@ int movie::getStock(string title){
 // Prescribed function for ostream. Follows o/p per instructions. 
 // --------------------------------------------------------------------------------------------------------------------
 ostream& operator<<(ostream &ostream, const movie &movie) {
-    if((movie.movie_type == "D") || (movie.movie_type == "F")) {
-    ostream << movie.movie_type << ", " << movie.stock << ", " << movie.director << ", " << movie.title << ", " 
+    if((movie.movie_Genre == "D") || (movie.movie_Genre == "F")) {
+    ostream << movie.movie_Genre << ", " << movie.stock << ", " << movie.director << ", " << movie.title << ", " 
     << movie.release_year;
   }
-  if (movie.movie_type == "C") {
-    ostream << movie.movie_type << ", " << movie.stock << ", " << movie.director << ", " << movie.title << ", " << 
-    movie.major_actor << " " << movie.release_month << " " << movie.release_year;
+  if (movie.movie_Genre == "C") {
+    ostream << movie.movie_Genre << ", " << movie.stock << ", " << movie.director << ", " << movie.title << ", " << 
+    movie.actor << " " << movie.release_month << " " << movie.release_year;
   }
   return ostream; 
 }
