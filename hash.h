@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 // Notes on specifications, special algorithms, and assumptions.
 // This is the header file for the hash table being used for our program. We used several online resources to implement
-// this hash table. The use of functional allows us to use std::hash, and per the instructions, we are allowed to use
-// std library. 
+// this hash table hence the basic structure. The use of functional allows us to use std::hash, and per the instructions, 
+// we are allowed to use std library and the like. We also got help from the QSC. 
 // --------------------------------------------------------------------------------------------------------------------
 #ifndef HASHTABLE_H_
 #define HASHTABLE_H_
@@ -19,50 +19,50 @@
 const int TABLE_SIZE = 200;
 
 template <typename Key, typename Val>
-class HashTable {
+class HashTable{
 public:
-    HashTable() { //constructor -----------------------------------------------------------------------------------------------------------------MAYBE change 
+    HashTable(){
         table = new HashNode *[TABLE_SIZE]();
     }
 
-    // ------------------------ Destructor -----------------------------------
-    // Deletes all the data stored in the tab
-    // -----------------------------------------------------------------------
-    ~HashTable() {
+    ~HashTable(){
         delete[] table;
     }
 
-    // ----------------------- insertItem ----------------------------------
-    // Inserts item into the hashTable using the key and val
-    // ---------------------------------------------------------------------
-    void insertItem(const Key &k, const Val &v) {
+    void insertItem(const Key &k, const Val &v){
         int hashVal = customHashFunction(k);
         HashNode *p = nullptr;
         HashNode *item = table[hashVal];
-        while (item && item->getKey() != k) {
+        while(item && item->getKey() != k){
             p = item;
             item = item->getNext();
         }
-        if (!item) {
+        if(!item) {
             item = new HashNode(k, v);
-            if (!p) {
+            if(!p){
                 table[hashVal] = item;
-            } else {
+            }else{
                 p->setNext(item);
             }
-        } else {
+        } else{
             item->setVal(v);
         }
     }
 
-    // ------------------------ findItem -----------------------------------
-    // Finds item in the hashTable using the key
-    // ---------------------------------------------------------------------
-    bool findItem(const Key &k) {
+
+
+
+
+
+
+
+
+
+    bool findItem(const Key &k){
         int hashVal = customHashFunction(k);
         HashNode *item = table[hashVal];
-        while (item) {
-            if (item->getKey() == k) {
+        while (item){
+            if(item->getKey() == k){
                 return true;
             }
             item = item->getNext();
@@ -70,12 +70,12 @@ public:
         return false;
     }
 
-    Val *retrieve(const Key &k) {
+    Val *retrieve(const Key &k){
         Val *val = nullptr;
         int hashVal = customHashFunction(k);
         HashNode *item = table[hashVal];
-        while (item) {
-            if (item->getKey() == k) {
+        while (item){
+            if (item->getKey() == k){
                 return val;
             }
             item = item->getNext();
@@ -87,20 +87,20 @@ public:
     // Removes given desired item from the hash table
     // Uses item key to find item first and then removes it
     // ------------------------------------------------------------------------
-    void removeItem(const Key &k) {
+    void removeItem(const Key &k){
         int hashVal = customHashFunction(k);
         HashNode *p = nullptr;
         HashNode *item = table[hashVal];
-        while (item && item->getKey() != k) {
+        while(item && item->getKey() != k){
             p = item;
             item = item->getNext();
         }
-        if (!item) {
+        if(!item){
             return;
-        } else {
-            if (!p) {
+        }else{
+            if(!p){
                 table[hashVal] = item->getNext();
-            } else {
+            }else{
                 p->setNext(item->getNext());
             }
             delete item;
@@ -110,10 +110,10 @@ public:
     //---------------------------- printAllData -------------------------------
     // Iterates through the table and prints all the vals stored
     // ------------------------------------------------------------------------
-    void printAllData() {
-        for (int i = 0; i < TABLE_SIZE; i++) {
+    void printAllData(){
+        for(int i = 0; i < TABLE_SIZE; i++){
             HashNode *item = table[i];
-            while (item) {
+            while(item){
                 std::cout << item->getVal() << std::endl;
                 item = item->getNext();
             }
@@ -121,7 +121,7 @@ public:
     }
 
 private:
-    class HashNode {
+    class HashNode{
     public:
         HashNode(const Key &k, const Val &v) : key(k), val(v), next(nullptr) {}
 
@@ -130,6 +130,12 @@ private:
         HashNode *getNext() const { return next; }
         void setNext(HashNode *n) { next = n; }
         void setVal(const Val &v) { val = v; }
+
+/*         HashNode *getNext() const { return next; }
+        void setNext(HashNode *n) { next = n; }
+        void setVal(const Val &v) { val = v; } */
+
+
 
     private:
         Key key;

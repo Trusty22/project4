@@ -17,34 +17,34 @@
 // -------------------------------------------- default constructor --------------------------------------------------
 // standard default constructor
 // --------------------------------------------------------------------------------------------------------------------
-inventory::inventory() {
+inventory::inventory(){
 }
 
 // ------------------------------------------------- destructor -------------------------------------------------------
 // standard deconstructor
 // --------------------------------------------------------------------------------------------------------------------
-inventory::~inventory() {
+inventory::~inventory(){
 }
 
 // ---------------------------------------------- store customer history ----------------------------------------------
 // Store customer history. Using vector pair, taking in 4 digit id number.
 // --------------------------------------------------------------------------------------------------------------------
-void inventory::addCustomerHistory(int id, string history) {
+void inventory::addCustomerHistory(int id, string history){
   customerHistory[id].push_back(history);
 }
 
 // ---------------------------------------------- print customer history ----------------------------------------------
 // Print cust history. Stored in vector pair.
 // --------------------------------------------------------------------------------------------------------------------
-void inventory::printCustomerHistory(int id) {
+void inventory::printCustomerHistory(int id){
   cout << "Customer " << id << " History " << endl; // REMOVED ----------
 
-  for (int i = 0; i < customerHistory[id].size(); i++) {
+  for(int i = 0; i < customerHistory[id].size(); i++){
     cout << customerHistory[id][i] << endl;
   }
 }
 
-void unavailable() {
+void unavailable(){
   cout << "Invalid this Genre of Movies is Unavailable" << endl;
 }
 
@@ -52,21 +52,21 @@ void unavailable() {
 // prints the inventory of movies for the rental store (this neglects current amount levels, and is a library overview).
 // POSSIBLY ANNEX THIS for simplicity since inventory amount is more useful.
 // --------------------------------------------------------------------------------------------------------------------
-void inventory::printInventory() {
+void inventory::printInventory(){
   int j = 0;
-  while (j < comedy.size()) { // comedy
+  while(j < comedy.size()){ // comedy
     cout << comedy[j] << endl;
     j++;
   }
 
   int k = 0;
-  while (k < drama.size()) { // drama
+  while(k < drama.size()){ // drama
     cout << drama[k] << endl;
     k++;
   }
 
   int i = 0;
-  while (i < classics.size()) { // classics
+  while(i < classics.size()){ // classics
     cout << classics[i] << endl;
     i++;
   }
@@ -78,19 +78,19 @@ void inventory::printInventory() {
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::printCurrentAvailableInventory() {
   int j = 0;
-  while (j < comedy.size()) { // comedy
+  while(j < comedy.size()){ // comedy
     cout << comedy[j] << "    Amount of is = " << comedy[j].amount << endl;
     j++;
   }
 
   int k = 0;
-  while (k < drama.size()) { // drama
+  while(k < drama.size()){ // drama
     cout << drama[k] << "    Amount of is = " << drama[k].amount << endl;
     k++;
   }
 
   int i = 0;
-  while (i < classics.size()) { // classics
+  while(i < classics.size()){ // classics
     cout << classics[i] << "    Amount of is = " << classics[i].amount << endl;
     i++;
   }
@@ -100,15 +100,15 @@ void inventory::printCurrentAvailableInventory() {
 // function def for adding a title to a genre. via vector.
 // -------------------------------------------------------------------------------------------------------------------
 void inventory::addMovie(movie movie) {
-  while (movie.movie_Genre == "F") {
+  while(movie.movie_Genre == "F"){
     comedy.push_back(movie);
     break;
   }
-  while (movie.movie_Genre == "D") {
+  while(movie.movie_Genre == "D"){
     drama.push_back(movie);
     break;
   }
-  while (movie.movie_Genre == "C") {
+  while(movie.movie_Genre == "C"){
     classics.push_back(movie);
     break;
   }
@@ -117,22 +117,22 @@ void inventory::addMovie(movie movie) {
 // ---------------------------------------------- manipulate comedy --------------------------------------------------
 // action handling for comedy film type.
 // -------------------------------------------------------------------------------------------------------------------
-bool inventory::manipulateComedy(string action, string title, int year) {
+bool inventory::manipulateComedy(string action, string title, int year){
   int i = 0;
-  while (i < comedy.size()) {
-    if (comedy[i].title == title && comedy[i].release_year == year) {
-      if (action == "B") {
-        if (comedy[i].amount - 1 < 0) {
+  while(i < comedy.size()){
+    if (comedy[i].title == title && comedy[i].release_year == year){
+      if(action == "B"){
+        if (comedy[i].amount - 1 < 0){
           unavailable();
           return false;
-        } else {
+        }else{
           comedy[i].amount = comedy[i].amount - 1;
           return true;
         }
-      } else if (action == "R") {
+      }else if(action == "R"){
         comedy[i].amount = comedy[i].amount + 1;
         return true;
-      } else if (action == "F") {
+      }else if (action == "F"){
         return true;
       }
     }
@@ -144,22 +144,22 @@ bool inventory::manipulateComedy(string action, string title, int year) {
 // ----------------------------------------------- manipulate drama --------------------------------------------------
 // action handling for drama film type.
 // -------------------------------------------------------------------------------------------------------------------
-bool inventory::manipulateDrama(string action, string director, string title) {
+bool inventory::manipulateDrama(string action, string director, string title){
   int i = 0;
-  while (i < drama.size()) {
-    if (drama[i].title == title && drama[i].director == director) {
-      if (action == "B") {
-        if (drama[i].amount - 1 < 0) {
+  while(i < drama.size()){
+    if(drama[i].title == title && drama[i].director == director){
+      if(action == "B"){
+        if(drama[i].amount - 1 < 0){
           unavailable();
           return false;
-        } else {
+        }else{
           drama[i].amount = drama[i].amount - 1;
           return true;
         }
-      } else if (action == "R") {
+      }else if(action == "R"){
         drama[i].amount = drama[i].amount + 1;
         return true;
-      } else if (action == "F") {
+      }else if(action == "F"){
         return true;
       }
     }
@@ -171,23 +171,23 @@ bool inventory::manipulateDrama(string action, string director, string title) {
 // --------------------------------------------- manipulate classics -------------------------------------------------
 // action handling for classics film type.
 // -------------------------------------------------------------------------------------------------------------------
-bool inventory::manipulateClassics(string action, int month, int year, string actor) {
+bool inventory::manipulateClassics(string action, int month, int year, string actor){
   int i = 0;
-  while (i < classics.size()) {
-    if (classics[i].release_month == month && classics[i].actor == actor &&
-        classics[i].release_year == year) {
-      if (action == "B") {
-        if (classics[i].amount - 1 < 0) {
+  while(i < classics.size()){
+    if(classics[i].release_month == month && classics[i].actor == actor &&
+        classics[i].release_year == year){
+      if(action == "B"){
+        if(classics[i].amount - 1 < 0){
           unavailable();
           return false;
-        } else {
+        }else{
           classics[i].amount = classics[i].amount - 1;
           return true;
         }
-      } else if (action == "R") {
+      }else if(action == "R"){
         classics[i].amount = classics[i].amount + 1;
         return true;
-      } else if (action == "F") {
+      }else if(action == "F"){
         return true;
       }
     }

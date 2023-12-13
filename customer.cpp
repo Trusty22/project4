@@ -53,11 +53,11 @@ string customer::getLastName(){
 // --------------------------------------------------------------------------------------------------------------------
 void customer::customerHistory(){
     int i = 0;
-    while (i < cusHis.size()) {
+    while (i < cusHis.size()){
       cout << cusHis[i] << endl;
       i++;
     }
-    if (cusHis.size() == 0) {
+    if (cusHis.size() == 0){
       cout << "Error: No available history." << endl;
     }
 }
@@ -65,16 +65,16 @@ void customer::customerHistory(){
 // ------------------------------------------------- add movie -------------------------------------------------------
 // Utilizing vector, add movie by title to a customers history. 
 // --------------------------------------------------------------------------------------------------------------------
-void customer::addMovie(string newMovie) {
+void customer::addMovie(string newMovie){
   cusHis.emplace_back(newMovie);
 }
-int customer::getID() {
+int customer::getID(){
   return this->id;
 }
 
 // ------------------------------------------------- add movie -------------------------------------------------------
 // printing to the format per the instructions. id number (4 digit), last name, first name. 
 // --------------------------------------------------------------------------------------------------------------------
-ostream& operator<<(ostream &output, customer &customer) {
+ostream& operator<<(ostream &output, customer &customer){
     return output << customer.getID() << " " << customer.getLastName() << " " << customer.getFirstName();
 }

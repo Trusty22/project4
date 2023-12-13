@@ -19,11 +19,11 @@ using namespace std;
 // Prescribed movie constructor. Includes variations for movie type. 
 // --------------------------------------------------------------------------------------------------------------------
 movie::movie(string movie_Genre){
-        while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")) {
+        while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")){
             std::cout << "Type does not exist. Enter 'D', 'F', or 'C': ";
             std::cin >> movie_Genre;
         }
-        if ((movie_Genre == "D") || (movie_Genre == "F") || (movie_Genre == "C")){
+        if((movie_Genre == "D") || (movie_Genre == "F") || (movie_Genre == "C")){
         this->movie_Genre = movie_Genre;
     }
 }
@@ -32,15 +32,16 @@ movie::movie(string movie_Genre){
 // Prescribed movie constructor for drama and comedy types. Includes variations for movie type. 
 // --------------------------------------------------------------------------------------------------------------------
 movie::movie(string movie_Genre, int amount, string director, string title, int release_year){
-    while (!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")){
+    while(!(movie_Genre == "D" || movie_Genre == "F" || movie_Genre == "C")){
         std::cout << "Type does not exist. Enter 'D', 'F', or 'C': ";
         std::cin >> movie_Genre;
     }
-    if ((movie_Genre == "D") || (movie_Genre == "F")){
+    if((movie_Genre == "D") || (movie_Genre == "F")){ //two check 
     this->movie_Genre = movie_Genre;
     this->amount = amount;
     this->director = director;
     this->title = title;
+
     this->actor = actor;
     this->release_year = release_year;
     this->release_month = release_month;
@@ -57,13 +58,14 @@ int release_year){
     std::cin >> movie_Genre;
     }
     if ((movie_Genre == "C")){
-    this->movie_Genre = movie_Genre;
+    this->movie_Genre = movie_Genre; //two check 
     this->amount = amount;
     this->director = director;
     this->title = title;
+
     this->actor = actor;
     this->release_year = release_year;
-    this->release_month = release_month;
+    this->release_month = release_month; //extra check 
   }
 }
 
@@ -77,12 +79,12 @@ int movie::getStock(string title){
 // --------------------------------------------------- ostream --------------------------------------------------------
 // Prescribed function for ostream. Follows o/p per instructions. 
 // --------------------------------------------------------------------------------------------------------------------
-ostream& operator<<(ostream &ostream, const movie &movie) {
-    if((movie.movie_Genre == "D") || (movie.movie_Genre == "F")) {
+ostream& operator<<(ostream &ostream, const movie &movie){
+    if((movie.movie_Genre == "D") || (movie.movie_Genre == "F")){
     ostream << movie.movie_Genre << ", " << movie.amount << ", " << movie.director << ", " << movie.title << ", " 
     << movie.release_year;
   }
-  if (movie.movie_Genre == "C") {
+  if(movie.movie_Genre == "C"){
     ostream << movie.movie_Genre << ", " << movie.amount << ", " << movie.director << ", " << movie.title << ", " << 
     movie.actor << " " << movie.release_month << " " << movie.release_year;
   }
