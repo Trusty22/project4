@@ -11,7 +11,7 @@ public:
   string title;
   string actor;
   string director;
-  int stock;
+  int amount;
   int release_year;
   int release_month;
 

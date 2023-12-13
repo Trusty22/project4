@@ -45,10 +45,13 @@ void inventory::printCustomerHistory(int id) {
     i++;
   }
 }
+void unavailable() {
+  cout << "Invalid this Genre of Movies is Unavailable" << endl;
+}
 
 // ---------------------------------------------- print inventory -----------------------------------------------------
-// prints the inventory of movies for the rental store (this neglects current stock levels, and is a library overview).
-// POSSIBLY ANNEX THIS for simplicity since inventory stock is more useful.
+// prints the inventory of movies for the rental store (this neglects current amount levels, and is a library overview).
+// POSSIBLY ANNEX THIS for simplicity since inventory amount is more useful.
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::printInventory() {
   int j = 0;
@@ -71,25 +74,25 @@ void inventory::printInventory() {
 }
 
 // -------------------------------------- print current available inventory -------------------------------------------
-// prints the current available inventory of movies for the rental store (this does NOT neglect current stock levels,
+// prints the current available inventory of movies for the rental store (this does NOT neglect current amount levels,
 // and is a up to date library overview). CHECK: Formatting!
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::printCurrentAvailableInventory() {
   int j = 0;
   while (j < comedy.size()) { // comedy
-    cout << comedy[j] << " \tStock = " << comedy[j].stock << endl;
+    cout << comedy[j] << "    Amount of is = " << comedy[j].amount << endl;
     j++;
   }
 
   int k = 0;
   while (k < drama.size()) { // drama
-    cout << drama[k] << " \tStock = " << drama[k].stock << endl;
+    cout << drama[k] << "    Amount of is = " << drama[k].amount << endl;
     k++;
   }
 
   int i = 0;
   while (i < classics.size()) { // classics
-    cout << classics[i] << " \tStock = " << classics[i].stock << endl;
+    cout << classics[i] << "    Amount of is = " << classics[i].amount << endl;
     i++;
   }
 }
@@ -120,15 +123,15 @@ bool inventory::manipulateComedy(string action, string title, int year) {
   while (i < comedy.size()) {
     if (comedy[i].title == title && comedy[i].release_year == year) {
       if (action == "B") {
-        if (comedy[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
+        if (comedy[i].amount - 1 < 0) {
+          unavailable();
           return false;
         } else {
-          comedy[i].stock = comedy[i].stock - 1;
+          comedy[i].amount = comedy[i].amount - 1;
           return true;
         }
       } else if (action == "R") {
-        comedy[i].stock = comedy[i].stock + 1;
+        comedy[i].amount = comedy[i].amount + 1;
         return true;
       } else if (action == "F") {
         return true;
@@ -147,15 +150,15 @@ bool inventory::manipulateDrama(string action, string director, string title) {
   while (i < drama.size()) {
     if (drama[i].title == title && drama[i].director == director) {
       if (action == "B") {
-        if (drama[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
+        if (drama[i].amount - 1 < 0) {
+          unavailable();
           return false;
         } else {
-          drama[i].stock = drama[i].stock - 1;
+          drama[i].amount = drama[i].amount - 1;
           return true;
         }
       } else if (action == "R") {
-        drama[i].stock = drama[i].stock + 1;
+        drama[i].amount = drama[i].amount + 1;
         return true;
       } else if (action == "F") {
         return true;
@@ -175,15 +178,15 @@ bool inventory::manipulateClassics(string action, int month, int year, string ac
     if (classics[i].release_month == month && classics[i].actor == actor &&
         classics[i].release_year == year) {
       if (action == "B") {
-        if (classics[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
+        if (classics[i].amount - 1 < 0) {
+          unavailable();
           return false;
         } else {
-          classics[i].stock = classics[i].stock - 1;
+          classics[i].amount = classics[i].amount - 1;
           return true;
         }
       } else if (action == "R") {
-        classics[i].stock = classics[i].stock + 1;
+        classics[i].amount = classics[i].amount + 1;
         return true;
       } else if (action == "F") {
         return true;
