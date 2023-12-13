@@ -1,45 +1,41 @@
-// ------------------------------------------------ inventory.h --------------------------------------------------------
+// ------------------------------------------------ inventory.h -------------------------------------------------------
 // Jacob Pedersen, Mandeep Masoun | CSS343 B Au 23
 // Creation Date: 11.27.2023
 // Date of Last Modification: 12.11.2023
-// ---------------------------------------------------------------------------------------------------------------------
-
+// --------------------------------------------------------------------------------------------------------------------
+// header file for inventory class. 
+// --------------------------------------------------------------------------------------------------------------------
+// Notes on specifications, special algorithms, and assumptions.
+// This is a class for managing operations of the store. This includes tracking of inventory stock, as well as incre-
+// menting and decrementing stock counts for movies within genres (for borrow and return). 
+// assuming that each item is uniquely identified by its complete set of sorting attributes. 
+// --------------------------------------------------------------------------------------------------------------------
 #ifndef inventory_h_
 #define inventory_h_
-
-#include "movie.h"
-#include <iostream>
-#include <map>
-#include <string>
-#include <vector>
-
-
 using namespace std;
+#include <iostream>
+#include "movie.h"
+#include <vector>
+#include <string>
 
-class Inventory {
-private:
-  map<int, vector<string>> cusData;
-
-  vector<movie> comedies;
-
-  vector<movie> classics;
-
-  vector<movie> dramas;
-  
-
+class inventory{
 public:
-  Inventory();
-  ~Inventory();
+    inventory(); //default 
+    ~inventory(); //deconstructor
+    void printInventory(); //prints I
+    void printCurrentAvailableInventory(); //prints I with more information including stock and relevant info 
+    void addMovie(movie addedMovie);
+    bool manipulateComedy(string action, string title, int yearReleased); //comedy movies (‘F’) sorted by Title, then Year it released
+    bool manipulateDrama(string action, string director, string title); //dramas (‘D’) are sorted by Director, then Title 
+    bool manipulateClassics(string action, int month, int year, string majorActor); //classics (‘C’) are sorted by Release date, then Major actor
+    void addCustomerHistory(int id, string customerHistory); //manual store customer history 
+    void printCustomerHistory(int id);
 
-  void addMovie(movie movie);   // adds movie to specific vector
-  void printEntireInventory();  // prints out the entire movie inventory
-  void printWorkingInventory(); // prints out entire movie inventory with stock specifically highlighted
+private:
+    vector<pair<int, vector<string>>> customerHistory;
+    vector<movie> comedy;
+    vector<movie> drama; 
+    vector<movie> classics; 
 
-  bool actionComedy(string action, string title, int year);                  // borrows, returns, and searches for comedies
-  bool actionDrama(string action, string director, string title);            // borrows, returns, and searches for dramas
-  bool actionClassic(string action, int month, int year, string majorActor); // borrows, returns, and searches for classics
-
-  void storeCustomerHistory(int id, string history); // stores a specific customer's history
-  void printCustomerHistory(int id);                 // prints a specific customer's history
 };
 #endif

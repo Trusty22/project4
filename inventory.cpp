@@ -1,140 +1,228 @@
+// ------------------------------------------------ inventory.cpp -----------------------------------------------------
+// Jacob Pedersen, Mandeep Masoun | CSS343 B Au 23
+// Creation Date: 11.27.2023
+// Date of Last Modification: 12.11.2023
+// --------------------------------------------------------------------------------------------------------------------
+// Implementation file for movie genre: classics. 
+// --------------------------------------------------------------------------------------------------------------------
+// Notes on specifications, special algorithms, and assumptions.
+// This is a genre of movie (three types for this movie rental store - comedy, drama, classics). Operations necessary
+// include: borrow, return, inventory and history. Assumptions are formed on the basis defined already and also
+// the fact that we are assuming the text files of movie store data (which include data4commands.txt and 
+// data4movies.txt) are read in successfully and the data is formatted correctly. We will check for garbage inputs
+// per the instructions and handle them with simple error messages. 
+// --------------------------------------------------------------------------------------------------------------------
 #include "inventory.h"
 
-using namespace std;
+// -------------------------------------------- default constructor --------------------------------------------------
+// standard default constructor
+// --------------------------------------------------------------------------------------------------------------------
+inventory::inventory(){
 
-Inventory::Inventory() {}
-Inventory::~Inventory() {}
-
-void Inventory::addMovie(movie movie) {
-
-  if (movie.movie_type == "C") {
-    classics.push_back(movie);
-  } else if (movie.movie_type == "F") {
-    comedies.push_back(movie);
-  } else if (movie.movie_type == "D") {
-    dramas.push_back(movie);
-  }
 }
 
-//----------------------------------------------------------------------------
-// printEntireInventory()
-// printEntireInventory(): Prints out the total inventory for the store
-void Inventory::printEntireInventory() {
-  for (int j = 0; j < comedies.size(); j++) {
-    cout << comedies[j] << endl;
-  }
-  for (int k = 0; k < dramas.size(); k++) {
-    cout << dramas[k] << endl;
-  }
-  for (int i = 0; i < classics.size(); i++) {
-    cout << classics[i] << endl;
-  }
+// ------------------------------------------------- destructor -------------------------------------------------------
+// standard deconstructor
+// --------------------------------------------------------------------------------------------------------------------
+inventory::~inventory(){
+
 }
 
-//----------------------------------------------------------------------------
-// printWorkingInventory()
-// printWorkingInventory(): Prints out the working inventory for the store
-void Inventory::printWorkingInventory() {
-  for (int j = 0; j < comedies.size(); j++) {
-    cout << comedies[j] << " \tStock = " << comedies[j].stock << endl;
-  }
-  for (int k = 0; k < dramas.size(); k++) {
-    cout << dramas[k] << " \tStock = " << dramas[k].stock << endl;
-  }
-  for (int i = 0; i < classics.size(); i++) {
-    cout << classics[i] << " \tStock = " << classics[i].stock << endl;
-  }
+// ---------------------------------------------- store customer history ----------------------------------------------
+// Store customer history. Using vector pair, taking in 4 digit id number.
+// --------------------------------------------------------------------------------------------------------------------
+void inventory::addCustomerHistory(int id, string history)
+{
+    customerHistory[id].second.push_back(history); //using vector pair to store 
 }
 
-//----------------------------------------------------------------------------
-// actionComedy()
-// actionComedy(): Borrows, returns, and searches for comedy movies
-bool Inventory::actionComedy(string action, string title, int year) {
-  for (int i = 0; i < comedies.size(); i++) {
-    if (comedies[i].title == title && comedies[i].release_year == year) {
-      if (action == "B") {
-        if (comedies[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
-          return false;
-        } else {
-          comedies[i].stock = comedies[i].stock - 1;
-          return true;
-        }
-      } else if (action == "R") {
-        comedies[i].stock = comedies[i].stock + 1;
-        return true;
-      } else if (action == "F") {
-        return true;
-      }
+// ---------------------------------------------- print customer history ----------------------------------------------
+// Print cust history. Stored in vector pair.  
+// --------------------------------------------------------------------------------------------------------------------
+void inventory::printCustomerHistory(int id)
+{
+    cout << " Customer ||" << id << " History " << endl; //REMOVED ----------
+
+    int i = 0;
+    while (i < customerHistory[id].second.size())
+    {
+        cout << customerHistory[id].second[i] << endl;
+        i++;
     }
-  }
-  return true;
 }
 
-//----------------------------------------------------------------------------
-// actionDrama()
-// actionDrama(): Borrows, returns, and searches for drama movies
-bool Inventory::actionDrama(string action, string director, string title) {
-  bool helper = false;
-  for (int i = 0; i < dramas.size(); i++) {
-    if (dramas[i].title == title && dramas[i].director == director) {
-      if (action == "B") {
-        if (dramas[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
-          return false;
-        } else {
-          dramas[i].stock = dramas[i].stock - 1;
-          return true;
-        }
-      } else if (action == "R") {
-        dramas[i].stock = dramas[i].stock + 1;
-        return true;
-      } else if (action == "F") {
-        return true;
-      }
+// ---------------------------------------------- print inventory -----------------------------------------------------
+// prints the inventory of movies for the rental store (this neglects current stock levels, and is a library overview).
+// POSSIBLY ANNEX THIS for simplicity since inventory stock is more useful. 
+// --------------------------------------------------------------------------------------------------------------------
+void inventory::printInventory()
+{
+    int j = 0;
+    while (j < comedy.size()){ //comedy
+        cout << comedy[j] << endl;
+        j++;
     }
-  }
-  return false;
-}
 
-//----------------------------------------------------------------------------
-// actionClassic()
-// actionClassic(): Borrows, returns, and searches for classic movies
-bool Inventory::actionClassic(string action, int month, int year, string majorActor) {
-  for (int i = 0; i < classics.size(); i++) {
-    if (classics[i].release_month == month && classics[i].major_actor == majorActor && classics[i].release_year == year) {
-      if (action == "B") {
-        if (classics[i].stock - 1 < 0) {
-          cout << "Error: Movie is Out of Stock." << endl;
-          return false;
-        } else {
-          classics[i].stock = classics[i].stock - 1;
-          return true;
-        }
-      } else if (action == "R") {
-        classics[i].stock = classics[i].stock + 1;
-        return true;
-      } else if (action == "F") {
-        return true;
-      }
+    int k = 0;
+    while (k < drama.size()){ //drama
+        cout << drama[k] << endl;
+        k++;
     }
-  }
-  return false;
+
+    int i = 0;
+    while (i < classics.size()){ //classics
+        cout << classics[i] << endl;
+        i++;
+    }
 }
 
-//----------------------------------------------------------------------------
-// storeCustomerHistory()
-// storeCustomerHistory(): Stores the individual customer history
-void Inventory::storeCustomerHistory(int id, string history) {
-  cusData[id].push_back(history);
+// -------------------------------------- print current available inventory -------------------------------------------
+// prints the current available inventory of movies for the rental store (this does NOT neglect current stock levels, 
+// and is a up to date library overview). CHECK: Formatting!
+// --------------------------------------------------------------------------------------------------------------------
+void inventory::printCurrentAvailableInventory()
+{
+    int j = 0;
+    while(j < comedy.size()){ //comedy
+        cout << comedy[j] << " \tStock = " << comedy[j].stock << endl;
+        j++;
+    }
+
+    int k = 0;
+    while(k < drama.size()){ //drama
+        cout << drama[k] << " \tStock = " << drama[k].stock << endl;
+        k++;
+    }
+
+    int i = 0;
+    while(i < classics.size()){ //classics
+        cout << classics[i] << " \tStock = " << classics[i].stock << endl;
+        i++;
+    }
 }
 
-//----------------------------------------------------------------------------
-// printCustomerHistory()
-// printCustomerHistory(): Prints out individual customer history
-void Inventory::printCustomerHistory(int id) {
-  cout << "--------- Customer " << id << " History ----------" << endl;
-  for (int i = 0; i < cusData[id].size(); i++) {
-    cout << cusData[id][i] << endl;
-  }
+// --------------------------------------------------- add movie -----------------------------------------------------
+// function def for adding a title to a genre. via vector. 
+// -------------------------------------------------------------------------------------------------------------------
+void inventory::addMovie(movie movie)
+{
+    while(movie.movie_type == "F"){
+        comedy.push_back(movie);
+        break;
+    }
+    while(movie.movie_type == "D"){
+        drama.push_back(movie);
+        break;
+    }
+    while (movie.movie_type == "C"){
+        classics.push_back(movie);
+        break;
+    }
+}
+
+// ---------------------------------------------- manipulate comedy --------------------------------------------------
+// action handling for comedy film type. 
+// -------------------------------------------------------------------------------------------------------------------
+bool inventory::manipulateComedy(string action, string title, int year){
+    int i = 0;
+    while (i < comedy.size()){
+        if (comedy[i].title == title && comedy[i].release_year == year){
+            if (action == "B"){
+                if (comedy[i].stock - 1 < 0){
+                    cout << "Error: Movie is Out of Stock." << endl;
+                    return false;
+                }
+                else{
+                    comedy[i].stock = comedy[i].stock - 1;
+                    return true;
+                }
+            }
+            else if (action == "R"){
+                comedy[i].stock = comedy[i].stock + 1;
+                return true;
+            }
+            else if (action == "F"){
+                return true;
+            }
+        }
+        i++;
+    }
+    return true;
+}
+
+// ----------------------------------------------- manipulate drama --------------------------------------------------
+// action handling for drama film type. 
+// -------------------------------------------------------------------------------------------------------------------
+bool inventory::manipulateDrama(string action, string director, string title)
+{
+    int i = 0;
+    while (i < drama.size())
+    {
+        if (drama[i].title == title && drama[i].director == director)
+        {
+            if (action == "B")
+            {
+                if (drama[i].stock - 1 < 0)
+                {
+                    cout << "Error: Movie is Out of Stock." << endl;
+                    return false;
+                }
+                else
+                {
+                    drama[i].stock = drama[i].stock - 1;
+                    return true;
+                }
+            }
+            else if (action == "R")
+            {
+                drama[i].stock = drama[i].stock + 1;
+                return true;
+            }
+            else if (action == "F")
+            {
+                return true;
+            }
+        }
+        i++;
+    }
+    return false;
+}
+
+// --------------------------------------------- manipulate classics -------------------------------------------------
+// action handling for classics film type. 
+// -------------------------------------------------------------------------------------------------------------------
+bool inventory::manipulateClassics(string action, int month, int year, string majorActor)
+{
+    int i = 0;
+    while (i < classics.size())
+    {
+        if (classics[i].release_month == month && classics[i].major_actor == majorActor &&
+            classics[i].release_year == year)
+        {
+            if (action == "B")
+            {
+                if (classics[i].stock - 1 < 0)
+                {
+                    cout << "Error: Movie is Out of Stock." << endl;
+                    return false;
+                }
+                else
+                {
+                    classics[i].stock = classics[i].stock - 1;
+                    return true;
+                }
+            }
+            else if (action == "R")
+            {
+                classics[i].stock = classics[i].stock + 1;
+                return true;
+            }
+            else if (action == "F")
+            {
+                return true;
+            }
+        }
+        i++;
+    }
+    return false;
 }
