@@ -35,7 +35,7 @@ public:
     void inData4Movies(string in); //for reading in the data4movies txt file 
 private:
     HashTable<int, customer> customersIn; //Update: HashTable
-    inventory inv;
+    Inventory inv;
     
 
 };
