@@ -1,12 +1,19 @@
-using namespace std;
-#include "movie.h"
 #include "customer.h"
 #include "inventory.h"
+#include "movie.h"
 #include "store.h"
-#include <sstream>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <sstream>
 
-int main(){
-    store store0;
+using namespace std;
+
+int main() {
+  store store;
+
+  store.inData4Movies("data4movies.txt");
+
+  store.inData4Customers("data4customers.txt");
+
+  store.inData4Commands("data4commands.txt");
 }
