@@ -47,7 +47,7 @@ void store::inData4Commands(string in) {
     ss >> transaction;
 
     if (transaction == "I") {
-      inv.printEntireInventory();
+      inv.printInventory();
     } else if (transaction == "H") {
       ss >> temp;
       istringstream(temp) >> ID;
@@ -102,14 +102,14 @@ void store::inData4Commands(string in) {
         getline(ss, mName, ',');
         ss >> yearR;
 
-        if (inv.actionComedy("F", " " + mName, yearR)) {
+        if (inv.manipulateComedy("F", " " + mName, yearR)) {
           string his = transaction + " " + movieGenre + " " + mName + " " + to_string(yearR);
-          inv.storeCustomerHistory(ID, his);
+          inv.addCustomerHistory(ID, his);
 
           if (transaction == "B") {
-            inv.actionComedy("B", " " + mName, yearR);
+            inv.manipulateComedy("B", " " + mName, yearR);
           } else {
-            inv.actionComedy("R", " " + mName, yearR);
+            inv.manipulateComedy("R", " " + mName, yearR);
           }
         }
       } else if (movieGenre == "D") {
@@ -117,28 +117,28 @@ void store::inData4Commands(string in) {
         getline(ss, director, ',');
         getline(ss, mName, ',');
 
-        if (inv.actionDrama("F", " " + director, mName)) {
+        if (inv.manipulateDrama("F", " " + director, mName)) {
           string his = transaction + " " + movieGenre + " " + mName + " " + director;
-          inv.storeCustomerHistory(ID, his);
+          inv.addCustomerHistory(ID, his);
 
           if (transaction == "B") {
-            inv.actionDrama("B", " " + director, mName);
+            inv.manipulateDrama("B", " " + director, mName);
           } else {
-            inv.actionDrama("R", " " + director, mName);
+            inv.manipulateDrama("R", " " + director, mName);
           }
         }
       } else if (movieGenre == "C") {
         ss >> monthR >> yearR >> actor;
 
-        if (inv.actionClassic("F", monthR, yearR, actor)) {
+        if (inv.manipulateClassics("F", monthR, yearR, actor)) {
           string his = transaction + " " + movieGenre + " " + to_string(monthR) + " " +
                        to_string(yearR) + " " + actor;
-          inv.storeCustomerHistory(ID, his);
+          inv.addCustomerHistory(ID, his);
 
           if (transaction == "B") {
-            inv.actionClassic("B", monthR, yearR, actor);
+            inv.manipulateClassics("B", monthR, yearR, actor);
           } else {
-            inv.actionClassic("R", monthR, yearR, actor);
+            inv.manipulateClassics("R", monthR, yearR, actor);
           }
         }
       } else {
