@@ -37,7 +37,7 @@ void inventory::addCustomerHistory(int id, string history) {
 // Print cust history. Stored in vector pair.
 // --------------------------------------------------------------------------------------------------------------------
 void inventory::printCustomerHistory(int id) {
-  cout << " Customer ||" << id << " History " << endl; // REMOVED ----------
+  cout << "Customer || " << id << " History " << endl; // REMOVED ----------
 
   int i = 0;
   while (i < customerHistory[id].second.size()) {
@@ -45,6 +45,7 @@ void inventory::printCustomerHistory(int id) {
     i++;
   }
 }
+
 void unavailable() {
   cout << "Invalid this Genre of Movies is Unavailable" << endl;
 }
