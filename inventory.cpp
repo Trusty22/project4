@@ -40,8 +40,12 @@ void inventory::printCustomerHistory(int id) {
   cout << "Customer || " << id << " History " << endl; // REMOVED ----------
 
   int i = 0;
+
+  cout << customerHistory[id].second[i] << endl;
+  cout << customerHistory[id].second.size() << endl;
+  
   while (i < customerHistory[id].second.size()) {
-    cout << customerHistory[id].second[i] << endl;
+    cout << customerHistory[id].second[i] << endl; // happens here when
     i++;
   }
 }

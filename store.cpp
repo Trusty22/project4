@@ -69,6 +69,7 @@ void store::inData4Commands(string in) {
       }
 
       inv.printCustomerHistory(ID);
+      // hrer
     } else if (transaction == "B" || transaction == "R") {
       ss >> temp;
       istringstream(temp) >> ID;
